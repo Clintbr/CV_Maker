@@ -15,14 +15,14 @@ export default function PreviewMain({ cvData }) {
     const SelectedTemplate = templates[cvData.settings.templateId] || ModernTemplate;
 
     return (
-        <div className="flex flex-col items-center">
+        <div id="cv-preview" className="flex flex-col items-center">
             <div
                 id="cv-preview"
                 className="bg-white shadow-2xl overflow-hidden mb-10 transition-all duration-300"
                 style={{
-                    width: '210mm',
-                    minHeight: '297mm',
-                    transform: 'scale(0.9)',
+                    width: '100%',
+                    maxWidth: '100%',
+                    transform: 'scale(1.0)',
                     transformOrigin: 'top center'
                 }}
             >

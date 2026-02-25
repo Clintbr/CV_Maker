@@ -1,5 +1,11 @@
 import React from 'react';
 import WorkExperienceForm from './WorkExperienceForm';
+import LanguagesForm from './LanguagesForm';
+import EducationForm from './EducationForm';
+import ProjectsForm from './ProjectsForm';
+import ImageUpload from './ImageUpload';
+import SkillsForm from './SkillsForm';
+import Icon from '../ui/Icon';
 
 export default function EditorMain({ cvData, setCvData }) {
 
@@ -12,108 +18,157 @@ export default function EditorMain({ cvData, setCvData }) {
     };
 
     return (
-        <div className="p-8 space-y-12 max-w-2xl mx-auto">
-            {/* TITEL DES EDITORS */}
-            <header>
-                <h1 className="text-3xl font-extrabold text-gray-900">CV Konfigurator</h1>
-                <p className="text-gray-500 mt-1">Fülle deine Daten aus und wähle dein Design.</p>
+        <div className="min-h-full bg-slate-50/50">
+            <header className="p-8 bg-gradient-to-r from-violet-600 to-indigo-600 text-white shadow-lg">
+                <div className="flex items-center gap-3 mb-2">
+                    <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
+                        <Icon name="file-document-edit" size={24} color="white" />
+                    </div>
+                    <h1 className="text-2xl font-bold tracking-tight">CV Builder</h1>
+                </div>
+                <p className="text-violet-100 text-sm">Erstelle deinen professionellen Lebenslauf in Echtzeit.</p>
             </header>
 
-            <section className="space-y-4">
-                <div className="flex items-center gap-2 border-b pb-2">
-                    <span className="text-xl">👤</span>
-                    <h2 className="text-xl font-bold text-gray-800">Persönliche Infos</h2>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="col-span-2">
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Vollständiger Name</label>
-                        <input
-                            name="name"
-                            value={cvData.personal.name}
-                            onChange={handlePersonalChange}
-                            placeholder="z.B. Clint Eastwood"
-                            className="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
-                        />
-                    </div>
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">E-Mail</label>
-                        <input
-                            name="email"
-                            type="email"
-                            value={cvData.personal.email}
-                            onChange={handlePersonalChange}
-                            placeholder="name@beispiel.de"
-                            className="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
-                        />
-                    </div>
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Telefon</label>
-                        <input
-                            name="phone"
-                            value={cvData.personal.phone}
-                            onChange={handlePersonalChange}
-                            placeholder="+49 123 456789"
-                            className="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
-                        />
-                    </div>
-                </div>
-            </section>
+            <div className="p-8 space-y-8 max-w-3xl mx-auto">
 
-            <section>
-                <div className="flex items-center gap-2 border-b pb-2 mb-4">
-                    <span className="text-xl">💼</span>
-                    <h2 className="text-xl font-bold text-gray-800">Berufserfahrung</h2>
-                </div>
-                <WorkExperienceForm cvData={cvData} setCvData={setCvData} />
-            </section>
+                <section className="bg-white p-6 rounded-2xl shadow-sm border border-violet-100 relative overflow-hidden">
+                    <div className="absolute top-0 left-0 w-1 h-full bg-violet-500"></div>
+                    <div className="flex items-center gap-2 mb-6">
+                        <Icon name="palette" size={20} color="#7c3aed" />
+                        <h2 className="text-lg font-bold text-slate-800">Design & Layout</h2>
+                    </div>
 
-            <section className="bg-blue-50 p-6 rounded-xl border border-blue-100 space-y-6">
-                <div className="flex items-center gap-2 border-b border-blue-200 pb-2">
-                    <span className="text-xl"> </span>
-                    <h2 className="text-xl font-bold text-blue-900">Erscheinungsbild</h2>
-                </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div className="space-y-2">
+                            <label className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Akzentfarbe</label>
+                            <div className="flex items-center gap-3 p-2 border border-slate-200 rounded-xl hover:border-violet-300 transition-colors">
+                                <input
+                                    type="color"
+                                    value={cvData.settings.primaryColor}
+                                    onChange={(e) => setCvData(prev => ({
+                                        ...prev,
+                                        settings: { ...prev.settings, primaryColor: e.target.value }
+                                    }))}
+                                    className="h-8 w-12 cursor-pointer rounded border-none"
+                                />
+                                <span className="text-sm font-mono text-slate-600">{cvData.settings.primaryColor}</span>
+                            </div>
+                        </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <label className="block text-sm font-semibold text-blue-800 mb-2">Akzentfarbe</label>
-                        <div className="flex items-center gap-3">
-                            <input
-                                type="color"
-                                value={cvData.settings.primaryColor}
+                        <div className="space-y-2">
+                            <label className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Template Stil</label>
+                            <select
+                                value={cvData.settings.templateId}
                                 onChange={(e) => setCvData(prev => ({
                                     ...prev,
-                                    settings: { ...prev.settings, primaryColor: e.target.value }
+                                    settings: { ...prev.settings, templateId: e.target.value }
                                 }))}
-                                className="h-10 w-10 cursor-pointer rounded-md border-none"
-                            />
-                            <span className="text-sm font-mono text-blue-700 uppercase tracking-wider">
-                {cvData.settings.primaryColor}
-              </span>
+                                className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-700 text-sm focus:ring-2 focus:ring-violet-500 outline-none appearance-none cursor-pointer"
+                            >
+                                <option value="t1">Futuristic Dark</option>
+                                <option value="t2">Modern Minimal</option>
+                                <option value="t3">Classic Corporate</option>
+                            </select>
                         </div>
                     </div>
+                </section>
 
-                    <div>
-                        <label className="block text-sm font-semibold text-blue-800 mb-2">Lebenslauf Template</label>
-                        <select
-                            value={cvData.settings.templateId}
-                            onChange={(e) => setCvData(prev => ({
-                                ...prev,
-                                settings: { ...prev.settings, templateId: e.target.value }
-                            }))}
-                            className="w-full p-2.5 bg-white border border-blue-200 rounded-lg text-gray-700 focus:ring-2 focus:ring-blue-500 outline-none cursor-pointer"
-                        >
-                            <option value="t1">Modern Professional (T1)</option>
-                            <option value="t2">Classic Executive (T2) </option>
-                            <option value="t3">Minimalist Clean (T3)</option>
-                        </select>
+                <section className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                    <div className="flex items-center gap-2 mb-6">
+                        <Icon name="account-circle" size={20} color="#7c3aed" />
+                        <h2 className="text-lg font-bold text-slate-800">Persönliche Informationen</h2>
+                    </div>
+
+                    <ImageUpload cvData={cvData} setCvData={setCvData} />
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="col-span-2">
+                            <label className="text-xs font-medium text-slate-400 mb-1 block">Vollständiger Name</label>
+                            <input
+                                name="name"
+                                value={cvData.personal.name}
+                                onChange={handlePersonalChange}
+                                placeholder="z.B. Clint Eastwood"
+                                className="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-violet-500 outline-none transition-all"
+                            />
+                        </div>
+                        <div className="col-span-2">
+                            <label className="text-xs font-medium text-slate-400 mb-1 block">Gesuchte Stelle</label>
+                            <input
+                                name="jobTitle"
+                                value={cvData.personal.jobTitle}
+                                onChange={handlePersonalChange}
+                                placeholder="z.B. Werkstudent Software Entwickler"
+                                className="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-violet-500 outline-none transition-all"
+                            />
+                        </div>
+                        <div>
+                            <label className="text-xs font-medium text-slate-400 mb-1 block">E-Mail</label>
+                            <input
+                                name="email"
+                                value={cvData.personal.email}
+                                onChange={handlePersonalChange}
+                                className="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-violet-500 outline-none"
+                            />
+                        </div>
+                        <div>
+                            <label className="text-xs font-medium text-slate-400 mb-1 block">Telefon</label>
+                            <input
+                                name="phone"
+                                value={cvData.personal.phone}
+                                onChange={handlePersonalChange}
+                                className="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-violet-500 outline-none"
+                            />
+                        </div>
+                        <div className="col-span-2 md:col-span-1">
+                            <label className="text-xs font-medium text-slate-400 mb-1 block">Straße & Hausnummer</label>
+                            <input
+                                name="address"
+                                value={cvData.personal.address}
+                                onChange={handlePersonalChange}
+                                placeholder="Beispielstraße 12"
+                                className="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-violet-500 outline-none"
+                            />
+                        </div>
+
+                        <div className="col-span-2 md:col-span-1">
+                            <label className="text-xs font-medium text-slate-400 mb-1 block">PLZ & Stadt</label>
+                            <input
+                                name="zipCode"
+                                value={cvData.personal.zipCode}
+                                onChange={handlePersonalChange}
+                                placeholder="12345 Berlin"
+                                className="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-violet-500 outline-none"
+                            />
+                        </div>
+                    </div>
+                </section>
+
+                <div className="space-y-6">
+                    <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                        <WorkExperienceForm cvData={cvData} setCvData={setCvData}/>
+                    </div>
+
+                    <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                        <EducationForm cvData={cvData} setCvData={setCvData}/>
+                    </div>
+
+                    <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                        <ProjectsForm cvData={cvData} setCvData={setCvData}/>
+                    </div>
+
+                    <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                        <SkillsForm cvData={cvData} setCvData={setCvData}/>
+                    </div>
+
+                    <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                        <LanguagesForm cvData={cvData} setCvData={setCvData}/>
                     </div>
                 </div>
-            </section>
 
-            <div className="pt-6">
-                <p className="text-center text-xs text-gray-400 italic">
-                    Alle Änderungen werden in Echtzeit in der Vorschau übernommen.
-                </p>
+                <footer className="py-10 text-center">
+                    <p className="text-slate-400 text-xs tracking-widest uppercase">Auto-Save Aktiviert</p>
+                </footer>
             </div>
         </div>
     );
