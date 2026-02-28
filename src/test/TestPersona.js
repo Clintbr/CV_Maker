@@ -78,14 +78,14 @@ export const testCVData = {
         }
     ],
     skills: [
-        { id: 1, name: 'React / Next.js', level: 95 },
-        { id: 2, name: 'TypeScript', level: 90 },
-        { id: 3, name: 'Node.js', level: 85 },
-        { id: 4, name: 'Python', level: 80 },
-        { id: 5, name: 'Docker / Kubernetes', level: 75 },
-        { id: 6, name: 'SQL / NoSQL', level: 85 },
-        { id: 7, name: 'GraphQL', level: 70 },
-        { id: 8, name: 'Tailwind CSS', level: 90 }
+        { id: 1, name: 'React / Next.js', level: 95, appreciation: 'ausgezeichnet' },
+        { id: 2, name: 'TypeScript', level: 90, appreciation: 'ausgezeichnet' },
+        { id: 3, name: 'Node.js', level: 85, appreciation: 'ausgezeichnet' },
+        { id: 4, name: 'Python', level: 80, appreciation: 'sehr gut' },
+        { id: 5, name: 'Docker / Kubernetes', level: 75, appreciation: 'sehr gut' },
+        { id: 6, name: 'SQL / NoSQL', level: 85, appreciation: 'ausgezeichnet' },
+        { id: 7, name: 'GraphQL', level: 70, appreciation: 'sehr gut' },
+        { id: 8, name: 'Tailwind CSS', level: 90, appreciation: 'ausgezeichnet' }
     ],
     languages: [
         { id: 1, name: 'Deutsch', level: 'Muttersprache' },

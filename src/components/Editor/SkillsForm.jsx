@@ -10,7 +10,7 @@ export default function SkillsForm({ cvData, setCvData }) {
     };
 
     const handleAdd = () => {
-        const newItem = { id: Date.now(), name: '', level: 50 };
+        const newItem = { id: Date.now(), name: '', level: 50, appreciation: ''};
         setCvData({ ...cvData, skills: [...cvData.skills, newItem] });
     };
 
@@ -40,14 +40,27 @@ export default function SkillsForm({ cvData, setCvData }) {
                             Löschen
                         </button>
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
-                            <input
-                                placeholder="Fähigkeit (z.B. JavaScript)"
-                                className="p-2 bg-white border border-slate-200 rounded-lg text-sm outline-none focus:ring-2 focus:ring-violet-500"
-                                value={skill.name}
-                                onChange={(e) => handleUpdate(skill.id, 'name', e.target.value)}
-                            />
-                            <div className="flex items-center gap-3">
+                        <div className="fley flex-col gap-3 items-center">
+                            <div className="flex gap-3 items-center group">
+                                <input
+                                    placeholder="Fähigkeit (z.B. JavaScript)"
+                                    className="p-2 bg-white border border-slate-200 rounded-lg text-sm outline-none focus:ring-2 focus:ring-violet-500"
+                                    value={skill.name}
+                                    onChange={(e) => handleUpdate(skill.id, 'name', e.target.value)}
+                                />
+                                <select
+                                    className="w-1/3 p-2 bg-slate-50 border border-slate-200 rounded-lg text-sm outline-none focus:ring-2 focus:ring-violet-500 cursor-pointer"
+                                    value={skill.appreciation}
+                                    onChange={(e) => handleUpdate(skill.id, 'appreciation', e.target.value)}
+                                >
+                                    <option value="">Niveau wählen</option>
+                                    <option value="Grundkentnisse">Grundkentnisse</option>
+                                    <option value="gut">gut</option>
+                                    <option value="sehr gut">sehr gut</option>
+                                    <option value="ausgezeichnet">ausgezeichnet</option>
+                                </select>
+                            </div>
+                            <div className="mt-3 pt-3">
                                 <input
                                     type="range"
                                     min="0" max="100"

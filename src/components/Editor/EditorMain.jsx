@@ -22,7 +22,7 @@ export default function EditorMain({ cvData, setCvData }) {
             <header className="p-8 bg-gradient-to-r from-violet-600 to-indigo-600 text-white shadow-lg">
                 <div className="flex items-center gap-3 mb-2">
                     <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
-                        <Icon name="file-document-edit" size={24} color="white" />
+                        <Icon name="file-document-box" size={24} color="white" />
                     </div>
                     <h1 className="text-2xl font-bold tracking-tight">CV Builder</h1>
                 </div>
@@ -167,7 +167,9 @@ export default function EditorMain({ cvData, setCvData }) {
                 </div>
 
                 <footer className="py-10 text-center">
-                    <p className="text-slate-400 text-xs tracking-widest uppercase">Auto-Save Aktiviert</p>
+                    <p className="text-slate-400 text-xs tracking-widest uppercase"> Designed by Clint - Softwaredev
+                        @{new Date().getFullYear()}</p>
+                    <p className="text-slate-400 text-xs tracking-widest uppercase"> All rights reserved</p>
                 </footer>
             </div>
         </div>

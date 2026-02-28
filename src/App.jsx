@@ -1,29 +1,19 @@
-import React, {useState, useEffect, useCallback, useRef} from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import EditorMain from './components/Editor/EditorMain';
 import PreviewMain from './components/Preview/PreviewMain';
-import html2pdf from 'html2pdf.js';
 import Icon from './components/ui/Icon';
-import {useReactToPrint} from "react-to-print";
-import {testCVData} from './test/TestPersona.js'
+import { useReactToPrint } from "react-to-print";
+import { testCVData } from './test/TestPersona.js';
 
 function App() {
     const contentRef = useRef(null);
+
     const [editorWidth, setEditorWidth] = useState(600);
     const [lastWidth, setLastWidth] = useState(600);
     const [isResizing, setIsResizing] = useState(false);
 
-    const handlePrint = useReactToPrint({
-        contentRef,
-        documentTitle: 'Lebenslauf',
-    });
-
-    /**
-     * Persona: The informations needed in the form
-     * test with a persona: the test State just help testing Cv related functionalities
-     * It doesn't help testing aoder apps functions
-     * const [cvData, setCvData] = useState(testCVData)
-     * Primary settings are already set in the form
-      */
+    const [isMobile, setIsMobile] = useState(window.innerWidth < 900);
+    const [activeTab, setActiveTab] = useState('editor');
 
     const [cvData, setCvData] = useState({
         personal: { name: '', email: '', phone: '', jobTitle: '', address: '', zipCode: '', profileImage: null },
@@ -32,10 +22,26 @@ function App() {
         projects: [],
         skills: [],
         languages: [],
-        settings: {
-            primaryColor: '#7c3aed',
-            templateId: 't1',
-        }
+        settings: { primaryColor: '#7c3aed', templateId: 't1' }
+    });
+
+    // --- Effects ---
+    useEffect(() => {
+        const handleResizeWindow = () => {
+            const mobile = window.innerWidth < 900;
+            setIsMobile(mobile);
+            if (!mobile && editorWidth === 0 && lastWidth === 0) {
+                setEditorWidth(600); // Reset falls aus Mobile-Mode zurückgekehrt wird
+            }
+        };
+        window.addEventListener('resize', handleResizeWindow);
+        return () => window.removeEventListener('resize', handleResizeWindow);
+    }, [editorWidth, lastWidth]);
+
+    // --- Resize & Print Logik ---
+    const handlePrint = useReactToPrint({
+        contentRef,
+        documentTitle: 'Lebenslauf',
     });
 
     const toggleEditor = () => {
@@ -48,26 +54,21 @@ function App() {
     };
 
     const startResizing = useCallback((e) => {
+        if (isMobile) return;
         e.preventDefault();
         setIsResizing(true);
-    }, []);
+    }, [isMobile]);
 
-    const stopResizing = useCallback(() => {
-        setIsResizing(false);
-    }, []);
+    const stopResizing = useCallback(() => setIsResizing(false), []);
 
     const resize = useCallback((e) => {
-        if (isResizing) {
-            const maxWidth = window.innerWidth * 0.4; // Genau 2/5 der Bildschirmbreite
+        if (isResizing && !isMobile) {
+            const maxWidth = window.innerWidth * 0.4;
             const newWidth = e.clientX;
-
-            if (newWidth < 100) {
-                setEditorWidth(0); // Snappt auf 0 zum Ausblenden
-            } else if (newWidth <= maxWidth) {
-                setEditorWidth(newWidth);
-            }
+            if (newWidth < 100) setEditorWidth(0);
+            else if (newWidth <= maxWidth) setEditorWidth(newWidth);
         }
-    }, [isResizing]);
+    }, [isResizing, isMobile]);
 
     useEffect(() => {
         if (isResizing) {
@@ -80,82 +81,75 @@ function App() {
         };
     }, [isResizing, resize, stopResizing]);
 
-    /**
-     * print de previewed CV with the native function of React using the Browser Print function
-     * It is not optimised: It will be replaced in next versions
-     * @returns {Promise<void>}
-     */
-    const downloadPDF = async () => {
-        const element = document.getElementById('cv-preview');
-        element.classList.add('pdf-export-mode');
-
-        const opt = {
-            margin: 0,
-            filename: `${cvData.personal.name || 'Lebenslauf'}.pdf`,
-            image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: {
-                scale: 1,
-                useCORS: true,
-                logging: false,
-                letterRendering: true,
-                allowTaint: true
-            },
-            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-        };
-
-        try {
-            await html2pdf().set(opt).from(element).save();
-        } catch (error) {
-            console.error("PDF Export fehlgeschlagen:", error);
-        } finally {
-            element.classList.remove('pdf-export-mode');
-        }
-    };
-
     return (
-        <div className="flex h-screen w-full bg-gray-100 overflow-hidden relative">
+        <div className="flex flex-col h-screen w-full bg-gray-100 overflow-hidden relative">
 
-            <section
-                className="h-full bg-white border-r relative z-20 flex flex-col"
-                style={{
-                    width: `${editorWidth}px`,
-                    minWidth: editorWidth > 0 ? '300px' : '0px',
-                    transition: isResizing ? 'none' : 'width 0.3s ease'
-                }}
-            >
-                <div className={`flex-1 overflow-y-auto ${editorWidth === 0 ? 'hidden' : 'block'}`}>
-                    <EditorMain cvData={cvData} setCvData={setCvData}/>
-                </div>
-                <div
-                    onMouseDown={startResizing}
-                    className="absolute top-0 -right-1 w-2 h-full cursor-col-resize z-50 group"
-                >
-                    <div className="w-full h-full bg-transparent group-hover:bg-blue-500/30 transition-colors" />
-
+            {/* MOBILE NAVIGATION TABS (Nur sichtbar < 900px) */}
+            {isMobile && (
+                <div className="flex bg-white border-b z-[70]">
                     <button
-                        onClick={toggleEditor}
-                        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-5 h-10 bg-white border border-gray-300 rounded-full shadow-md flex items-center justify-center hover:bg-gray-50 z-[60]"
+                        onClick={() => setActiveTab('editor')}
+                        className={`flex-1 py-4 text-sm font-bold flex items-center justify-center gap-2 ${activeTab === 'editor' ? 'text-violet-600 border-b-2 border-violet-600 bg-violet-50' : 'text-gray-500'}`}
                     >
-                        <Icon name={editorWidth === 0 ? "chevron-right" : "chevron-left"} size={14} color="#666" />
+                        <Icon name="pencil" size={16} /> Editor
+                    </button>
+                    <button
+                        onClick={() => setActiveTab('preview')}
+                        className={`flex-1 py-4 text-sm font-bold flex items-center justify-center gap-2 ${activeTab === 'preview' ? 'text-violet-600 border-b-2 border-violet-600 bg-violet-50' : 'text-gray-500'}`}
+                    >
+                        <Icon name="eye" size={16} /> Vorschau
                     </button>
                 </div>
-            </section>
+            )}
 
-            <section className="flex-1 h-full overflow-y-auto bg-gray-300 p-8 flex flex-col items-center relative z-10">
-                <button
-                    onClick={handlePrint}
-                    className="fixed bottom-8 right-8 flex items-center gap-2 bg-violet-600 hover:bg-violet-700 text-white px-6 py-3 rounded-full shadow-2xl z-50 font-bold"
+            <div className="flex flex-1 h-full overflow-hidden relative">
+
+                {/* EDITOR SEKTION */}
+                <section
+                    className={`h-full bg-white border-r relative z-20 flex flex-col transition-all duration-300
+                        ${isMobile ? (activeTab === 'editor' ? 'w-full' : 'hidden') : ''}`}
+                    style={!isMobile ? { width: `${editorWidth}px`, minWidth: editorWidth > 0 ? '300px' : '0px' } : {}}
                 >
-                    <Icon name="printer" size={20} color="white"/>
-                    <span>PDF / Drucken</span>
-                </button>
-
-                <div className="w-full flex justify-center">
-                    <div ref={contentRef} className="shadow-2xl bg-white">
-                        <PreviewMain cvData={cvData}/>
+                    <div className={`flex-1 overflow-y-auto ${!isMobile && editorWidth === 0 ? 'hidden' : 'block'}`}>
+                        <EditorMain cvData={cvData} setCvData={setCvData}/>
                     </div>
-                </div>
-            </section>
+
+                    {/* Resize Handle (Nur auf Desktop sichtbar) */}
+                    {!isMobile && (
+                        <div
+                            onMouseDown={startResizing}
+                            className="absolute top-0 -right-1 w-2 h-full cursor-col-resize z-50 group"
+                        >
+                            <div className="w-full h-full bg-transparent group-hover:bg-blue-500/30 transition-colors" />
+                            <button
+                                onClick={toggleEditor}
+                                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-5 h-10 bg-white border border-gray-300 rounded-full shadow-md flex items-center justify-center hover:bg-gray-50 z-[60]"
+                            >
+                                <Icon name={editorWidth === 0 ? "chevron-right" : "chevron-left"} size={14} color="#666" />
+                            </button>
+                        </div>
+                    )}
+                </section>
+
+                {/* VORSCHAU SEKTION */}
+                <section className={`flex-1 h-full overflow-y-auto bg-gray-300 p-4 md:p-8 flex flex-col items-center relative z-10 
+                    ${isMobile && activeTab !== 'preview' ? 'hidden' : ''}`}>
+
+                    <button
+                        onClick={handlePrint}
+                        className="fixed bottom-8 right-8 flex items-center gap-2 bg-violet-600 hover:bg-violet-700 text-white px-6 py-3 rounded-full shadow-2xl z-50 font-bold active:scale-95 transition-transform"
+                    >
+                        <Icon name="printer" size={20} color="white"/>
+                        <span className={isMobile ? "hidden" : "block"}>PDF / Drucken</span>
+                    </button>
+
+                    <div className={`w-full justify-center ${isMobile ? '' : ''}`}>
+                        <div ref={contentRef} className="shadow-2xl bg-white">
+                            <PreviewMain cvData={cvData}/>
+                        </div>
+                    </div>
+                </section>
+            </div>
         </div>
     );
 }
