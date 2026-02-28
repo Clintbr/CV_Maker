@@ -26,14 +26,14 @@ export default function WorkExperienceForm({ cvData, setCvData }) {
 
             {cvData.workExperience.map((work) => (
                 <div key={work.id} className="p-4 border rounded-lg mb-4 bg-gray-50 relative">
+                    <div className="p-4 height-100 rounded-lg mb-4 bg-gray-50 relative">
                     <button
                         onClick={() => handleDelete(work.id)}
-                        className="absolute border rounded-lg mb-4 top-2 right-2 text-red-500 hover:text-red-700 font-bold"
+                        className="absolute top-2 right-2 text-red-500 hover:text-red-700 font-bold"
                     >
                         Löschen
                     </button>
-
-                    <div className="top-10">
+                    </div>
                         <input
                             placeholder="Firma"
                             className="w-full p-2 mb-2 border rounded"
@@ -58,8 +58,6 @@ export default function WorkExperienceForm({ cvData, setCvData }) {
                             value={work.description}
                             onChange={(e) => handleUpdate(work.id, 'description', e.target.value)}
                         />
-                    </div>
-
                 </div>
             ))}
 

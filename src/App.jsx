@@ -18,9 +18,11 @@ function App() {
     });
 
     /**
+     * Persona: The informations needed in the form
      * test with a persona: the test State just help testing Cv related functionalities
      * It doesn't help testing aoder apps functions
      * const [cvData, setCvData] = useState(testCVData)
+     * Primary settings are already set in the form
       */
 
     const [cvData, setCvData] = useState({
@@ -78,6 +80,11 @@ function App() {
         };
     }, [isResizing, resize, stopResizing]);
 
+    /**
+     * print de previewed CV with the native function of React using the Browser Print function
+     * It is not optimised: It will be replaced in next versions
+     * @returns {Promise<void>}
+     */
     const downloadPDF = async () => {
         const element = document.getElementById('cv-preview');
         element.classList.add('pdf-export-mode');

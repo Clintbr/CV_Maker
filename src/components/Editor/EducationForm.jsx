@@ -20,9 +20,14 @@ export default function EducationForm({ cvData, setCvData }) {
             </div>
             {cvData.education.map((edu) => (
                 <div key={edu.id} className="p-4 border rounded-lg mb-4 bg-gray-50 relative">
-                    <button onClick={() => handleDelete(edu.id)}
-                            className="absolute top-2 right-2 text-red-500 text-xs">Löschen
-                    </button>
+                    <div className="p-4 height-100 rounded-lg mb-4 bg-gray-50 relative">
+                        <button
+                            onClick={() => handleDelete(edu.id)}
+                            className="absolute top-2 right-2 text-red-500 hover:text-red-700 font-bold"
+                        >
+                            Löschen
+                        </button>
+                    </div>
                     <input placeholder="Schule / Uni" className="w-full p-2 mb-2 border rounded" value={edu.school}
                            onChange={(e) => handleUpdate(edu.id, 'school', e.target.value)}/>
                     <input placeholder="Abschluss" className="w-full p-2 mb-2 border rounded" value={edu.degree}

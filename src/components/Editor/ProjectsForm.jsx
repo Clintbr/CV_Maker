@@ -20,9 +20,14 @@ export default function ProjectsForm({ cvData, setCvData }) {
             </div>
             {cvData.projects.map((proj) => (
                 <div key={proj.id} className="p-4 border rounded-lg mb-4 bg-gray-50 relative">
-                    <button onClick={() => handleDelete(proj.id)}
-                            className="absolute top-2 right-2 text-red-500 text-xs">Löschen
-                    </button>
+                    <div className="p-4 height-100 rounded-lg mb-4 bg-gray-50 relative">
+                        <button
+                            onClick={() => handleDelete(proj.id)}
+                            className="absolute top-2 right-2 text-red-500 hover:text-red-700 font-bold"
+                        >
+                            Löschen
+                        </button>
+                    </div>
                     <input placeholder="Projekt Titel" className="w-full p-2 mb-2 border rounded" value={proj.title}
                            onChange={(e) => handleUpdate(proj.id, 'title', e.target.value)}/>
                     <input placeholder="Link (optional)" className="w-full p-2 mb-2 border rounded" value={proj.link}
