@@ -17,16 +17,27 @@ export default function ProjectsForm({ cvData, setCvData }) {
         <div className="mt-8">
             <div className="flex justify-between items-center mb-4 border-b pb-2">
                 <h2 className="text-xl font-bold text-gray-800">Projekte</h2>
-                <button onClick={handleAdd} className="text-blue-600 font-bold text-sm">+ Hinzufügen</button>
             </div>
             {cvData.projects.map((proj) => (
                 <div key={proj.id} className="p-4 border rounded-lg mb-4 bg-gray-50 relative">
-                    <button onClick={() => handleDelete(proj.id)} className="absolute top-2 right-2 text-red-500 text-xs">Löschen</button>
-                    <input placeholder="Projekt Titel" className="w-full p-2 mb-2 border rounded" value={proj.title} onChange={(e) => handleUpdate(proj.id, 'title', e.target.value)} />
-                    <input placeholder="Link (optional)" className="w-full p-2 mb-2 border rounded" value={proj.link} onChange={(e) => handleUpdate(proj.id, 'link', e.target.value)} />
-                    <textarea placeholder="Beschreibung" className="w-full p-2 border rounded h-16" value={proj.description} onChange={(e) => handleUpdate(proj.id, 'description', e.target.value)} />
+                    <button onClick={() => handleDelete(proj.id)}
+                            className="absolute top-2 right-2 text-red-500 text-xs">Löschen
+                    </button>
+                    <input placeholder="Projekt Titel" className="w-full p-2 mb-2 border rounded" value={proj.title}
+                           onChange={(e) => handleUpdate(proj.id, 'title', e.target.value)}/>
+                    <input placeholder="Link (optional)" className="w-full p-2 mb-2 border rounded" value={proj.link}
+                           onChange={(e) => handleUpdate(proj.id, 'link', e.target.value)}/>
+                    <textarea placeholder="Beschreibung" className="w-full p-2 border rounded h-16"
+                              value={proj.description}
+                              onChange={(e) => handleUpdate(proj.id, 'description', e.target.value)}/>
                 </div>
             ))}
+            <button
+                onClick={handleAdd}
+                className="w-full py-2 bg-black text-white rounded hover:bg-gray-800 transition"
+            >
+                + Projekte hinzufügen
+            </button>
         </div>
     );
 }

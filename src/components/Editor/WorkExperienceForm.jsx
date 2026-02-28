@@ -28,35 +28,38 @@ export default function WorkExperienceForm({ cvData, setCvData }) {
                 <div key={work.id} className="p-4 border rounded-lg mb-4 bg-gray-50 relative">
                     <button
                         onClick={() => handleDelete(work.id)}
-                        className="absolute top-2 right-2 text-red-500 hover:text-red-700 font-bold"
+                        className="absolute border rounded-lg mb-4 top-2 right-2 text-red-500 hover:text-red-700 font-bold"
                     >
                         Löschen
                     </button>
 
-                    <input
-                        placeholder="Firma"
-                        className="w-full p-2 mb-2 border rounded"
-                        value={work.company}
-                        onChange={(e) => handleUpdate(work.id, 'company', e.target.value)}
-                    />
-                    <input
-                        placeholder="Position"
-                        className="w-full p-2 mb-2 border rounded"
-                        value={work.role}
-                        onChange={(e) => handleUpdate(work.id, 'role', e.target.value)}
-                    />
-                    <input
-                        placeholder="Zeitraum (z.B. 2020 - Heute)"
-                        className="w-full p-2 mb-2 border rounded"
-                        value={work.duration}
-                        onChange={(e) => handleUpdate(work.id, 'duration', e.target.value)}
-                    />
-                    <textarea
-                        placeholder="Beschreibung deiner Aufgaben"
-                        className="w-full p-2 border rounded h-20"
-                        value={work.description}
-                        onChange={(e) => handleUpdate(work.id, 'description', e.target.value)}
-                    />
+                    <div className="top-10">
+                        <input
+                            placeholder="Firma"
+                            className="w-full p-2 mb-2 border rounded"
+                            value={work.company}
+                            onChange={(e) => handleUpdate(work.id, 'company', e.target.value)}
+                        />
+                        <input
+                            placeholder="Position"
+                            className="w-full p-2 mb-2 border rounded"
+                            value={work.role}
+                            onChange={(e) => handleUpdate(work.id, 'role', e.target.value)}
+                        />
+                        <input
+                            placeholder="Zeitraum (z.B. 2020 - Heute)"
+                            className="w-full p-2 mb-2 border rounded"
+                            value={work.duration}
+                            onChange={(e) => handleUpdate(work.id, 'duration', e.target.value)}
+                        />
+                        <textarea
+                            placeholder="Beschreibung deiner Aufgaben"
+                            className="w-full p-2 border rounded h-20"
+                            value={work.description}
+                            onChange={(e) => handleUpdate(work.id, 'description', e.target.value)}
+                        />
+                    </div>
+
                 </div>
             ))}
 

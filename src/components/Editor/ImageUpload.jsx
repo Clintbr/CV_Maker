@@ -23,7 +23,7 @@ export default function ImageUpload({ cvData, setCvData }) {
     return (
         <div className="mb-8">
             <label className="block text-sm font-medium text-gray-700 mb-2">Profilbild</label>
-            <div className="flex items-center gap-4">
+            <div className="flex flex-col items-start gap-4">
                 {cvData.personal.profileImage ? (
                     <div className="relative">
                         <img
