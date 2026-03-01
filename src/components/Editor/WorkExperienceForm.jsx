@@ -43,21 +43,29 @@ export default function WorkExperienceForm({ cvData, setCvData }) {
                         <input
                             placeholder="Position"
                             className="w-full p-2 mb-2 border rounded"
-                            value={work.role}
-                            onChange={(e) => handleUpdate(work.id, 'role', e.target.value)}
+                            value={work.position}
+                            onChange={(e) => handleUpdate(work.id, 'position', e.target.value)}
+                        />
+                    <div className="flex gap-3">
+                        <input
+                            placeholder="startDatum (z.B. 01.02.2026)"
+                            className="w-full p-2 mb-2 border rounded"
+                            value={work.startDate}
+                            onChange={(e) => handleUpdate(work.id, 'startDate', e.target.value)}
                         />
                         <input
-                            placeholder="Zeitraum (z.B. 2020 - Heute)"
+                            placeholder="Zeitraum (z.B. 01.02.2026)"
                             className="w-full p-2 mb-2 border rounded"
-                            value={work.duration}
-                            onChange={(e) => handleUpdate(work.id, 'duration', e.target.value)}
+                            value={work.endDate}
+                            onChange={(e) => handleUpdate(work.id, 'endDate', e.target.value)}
                         />
-                        <textarea
-                            placeholder="Beschreibung deiner Aufgaben"
-                            className="w-full p-2 border rounded h-20"
-                            value={work.description}
-                            onChange={(e) => handleUpdate(work.id, 'description', e.target.value)}
-                        />
+                    </div>
+                    <textarea
+                        placeholder="Beschreibung deiner Aufgaben"
+                        className="w-full p-2 border rounded h-20"
+                        value={work.description}
+                        onChange={(e) => handleUpdate(work.id, 'description', e.target.value)}
+                    />
                 </div>
             ))}
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import {templatesIds} from '../Preview/TemplatesMap.js'
 import WorkExperienceForm from './WorkExperienceForm';
 import LanguagesForm from './LanguagesForm';
 import EducationForm from './EducationForm';
@@ -61,13 +62,14 @@ export default function EditorMain({ cvData, setCvData }) {
                                 value={cvData.settings.templateId}
                                 onChange={(e) => setCvData(prev => ({
                                     ...prev,
-                                    settings: { ...prev.settings, templateId: e.target.value }
+                                    settings: {...prev.settings, templateId: e.target.value}
                                 }))}
                                 className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-700 text-sm focus:ring-2 focus:ring-violet-500 outline-none appearance-none cursor-pointer"
                             >
-                                <option value="t1">Futuristic Dark</option>
-                                <option value="t2">Modern Minimal</option>
-                                <option value="t3">Classic Corporate</option>
+                                <option value="t1">{templatesIds.t1.name}</option>
+                                <option value="t2">{templatesIds.t2.name}</option>
+                                <option value="t3">{templatesIds.t3.name}</option>
+                                <option value="t4">{templatesIds.t4.name}</option>
                             </select>
                         </div>
                     </div>

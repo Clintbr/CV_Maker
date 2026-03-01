@@ -6,14 +6,12 @@ export default function ClassicTemplate({ data }) {
 
     return (
         <div className="bg-white w-full h-full font-sans text-gray-700 relative overflow-hidden">
-            {/* Einfache, elegante Linie als Dekoration */}
             <div
                 className="absolute top-0 left-0 w-1 h-full"
                 style={{ backgroundColor: primaryColor }}
             ></div>
 
             <div className="relative z-10 h-full overflow-y-auto">
-                {/* Header mit klarer Struktur */}
                 <div className="pl-8 pr-12 py-8 border-b border-gray-200">
                     <div className="max-w-4xl mx-auto flex flex-col md:flex-row justify-between items-start gap-6">
                         <div className="flex-1">
@@ -62,12 +60,9 @@ export default function ClassicTemplate({ data }) {
                     </div>
                 </div>
 
-                {/* Hauptinhalt mit zwei Spalten */}
                 <div className="pl-8 pr-12 py-8">
                     <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
-                        {/* Linke Spalte */}
                         <div className="space-y-6">
-                            {/* Skills */}
                             <div>
                                 <h3 className="text-sm font-bold uppercase tracking-wider text-gray-500 mb-3 flex items-center gap-2">
                                     <Icon name="star" size={16} color={primaryColor} />
@@ -94,7 +89,6 @@ export default function ClassicTemplate({ data }) {
                                 </div>
                             </div>
 
-                            {/* Sprachen */}
                             {data.languages && data.languages.length > 0 && (
                                 <div>
                                     <h3 className="text-sm font-bold uppercase tracking-wider text-gray-500 mb-3 flex items-center gap-2">
@@ -112,7 +106,6 @@ export default function ClassicTemplate({ data }) {
                                 </div>
                             )}
 
-                            {/* Bildung */}
                             {data.education && data.education.length > 0 && (
                                 <div>
                                     <h3 className="text-sm font-bold uppercase tracking-wider text-gray-500 mb-3 flex items-center gap-2">
@@ -136,10 +129,7 @@ export default function ClassicTemplate({ data }) {
                                 </div>
                             )}
                         </div>
-
-                        {/* Rechte Spalte */}
                         <div className="md:col-span-2 space-y-8">
-                            {/* Berufserfahrung */}
                             {data.workExperience && data.workExperience.length > 0 && (
                                 <section>
                                     <h2 className="text-base font-bold uppercase tracking-wider text-gray-500 mb-4 flex items-center gap-2 border-b border-gray-100 pb-2">
@@ -165,7 +155,6 @@ export default function ClassicTemplate({ data }) {
                                 </section>
                             )}
 
-                            {/* Projekte */}
                             {data.projects && data.projects.length > 0 && (
                                 <section>
                                     <h2 className="text-base font-bold uppercase tracking-wider text-gray-500 mb-4 flex items-center gap-2 border-b border-gray-100 pb-2">

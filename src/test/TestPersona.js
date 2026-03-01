@@ -26,14 +26,6 @@ export const testCVData = {
             startDate: '2018-07',
             endDate: '2021-02',
             description: 'Aufbau einer component-basierten Design-System-Bibliothek mit Vue.js und TypeScript. Enge Zusammenarbeit mit UX-Designern.'
-        },
-        {
-            id: 3,
-            company: 'StartUp Labs',
-            position: 'Werkstudent Softwareentwicklung',
-            startDate: '2016-10',
-            endDate: '2018-06',
-            description: 'Mitarbeit an der Entwicklung einer mobilen Fitness-App (React Native).'
         }
     ],
     education: [
@@ -57,21 +49,21 @@ export const testCVData = {
     projects: [
         {
             id: 1,
-            name: 'KI-Code-Assistent',
+            title: 'KI-Code-Assistent',
             description: 'Entwicklung eines VS-Code Plugins, das Entwicklern mittels GPT-API Code-Vorschläge generiert.',
             technologies: ['TypeScript', 'OpenAI API', 'LangChain'],
             link: 'github.com/elias/ai-code-assistant'
         },
         {
             id: 2,
-            name: 'Smart Home Dashboard',
+            title: 'Smart Home Dashboard',
             description: 'IoT-Dashboard zur Steuerung von smarten Geräten mit Echtzeit-Updates via WebSockets.',
             technologies: ['Next.js', 'Tailwind CSS', 'Node.js', 'MQTT'],
             link: 'smart-home-demo.vercel.app'
         },
         {
             id: 3,
-            name: 'Datenbank-Optimierungstool',
+            title: 'Datenbank-Optimierungstool',
             description: 'Open-Source Tool zur Analyse und Optimierung von MongoDB-Abfragen.',
             technologies: ['Python', 'MongoDB', 'Pandas'],
             link: 'github.com/elias/db-optimizer'

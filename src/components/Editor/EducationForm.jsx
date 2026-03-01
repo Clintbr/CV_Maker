@@ -28,19 +28,25 @@ export default function EducationForm({ cvData, setCvData }) {
                             Löschen
                         </button>
                     </div>
-                    <input placeholder="Schule / Uni" className="w-full p-2 mb-2 border rounded" value={edu.school}
-                           onChange={(e) => handleUpdate(edu.id, 'school', e.target.value)}/>
+                    <input placeholder="Schule / Uni" className="w-full p-2 mb-2 border rounded" value={edu.institution}
+                           onChange={(e) => handleUpdate(edu.id, 'institution', e.target.value)}/>
                     <input placeholder="Abschluss" className="w-full p-2 mb-2 border rounded" value={edu.degree}
                            onChange={(e) => handleUpdate(edu.id, 'degree', e.target.value)}/>
-                    <input placeholder="Zeitraum" className="w-full p-2 border rounded" value={edu.year}
-                           onChange={(e) => handleUpdate(edu.id, 'year', e.target.value)}/>
+                    <input placeholder="Schwerpunkte" className="w-full p-2 mb-2 border rounded" value={edu.description}
+                           onChange={(e) => handleUpdate(edu.id, 'description', e.target.value)}/>
+                    <div className="flex gap-3 mb-2">
+                        <input placeholder="startDatum (z.B. 01.02.2026)" className="w-full p-2 border rounded" value={edu.startDate}
+                               onChange={(e) => handleUpdate(edu.id, 'startDate', e.target.value)}/>
+                        <input placeholder="endDatum (z.B. 01.02.2026)" className="w-full p-2 border rounded" value={edu.endDate}
+                               onChange={(e) => handleUpdate(edu.id, 'endDate', e.target.value)}/>
+                    </div>
                 </div>
             ))}
             <button
                 onClick={handleAdd}
                 className="w-full py-2 bg-black text-white rounded hover:bg-gray-800 transition"
             >
-                + Bildung hinzufügen
+            + Bildung hinzufügen
             </button>
         </div>
     );

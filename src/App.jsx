@@ -15,7 +15,15 @@ function App() {
     const [isMobile, setIsMobile] = useState(window.innerWidth < 900);
     const [activeTab, setActiveTab] = useState('editor');
 
-    const [cvData, setCvData] = useState({
+    /**
+     * Persona: The informations needed in the form
+     * test with a persona: the test State just help testing Cv related functionalities
+     * It doesn't help testing aoder apps functions
+     * const [cvData, setCvData] = useState(testCVData)
+     * Primary settings are already set in the form
+     */
+    const [cvData, setCvData] = useState(testCVData
+        /*{
         personal: { name: '', email: '', phone: '', jobTitle: '', address: '', zipCode: '', profileImage: null },
         workExperience: [],
         education: [],
@@ -23,22 +31,25 @@ function App() {
         skills: [],
         languages: [],
         settings: { primaryColor: '#7c3aed', templateId: 't1' }
-    });
+    }*/
+    );
 
-    // --- Effects ---
     useEffect(() => {
         const handleResizeWindow = () => {
             const mobile = window.innerWidth < 900;
             setIsMobile(mobile);
             if (!mobile && editorWidth === 0 && lastWidth === 0) {
-                setEditorWidth(600); // Reset falls aus Mobile-Mode zurückgekehrt wird
+                setEditorWidth(600);
             }
         };
         window.addEventListener('resize', handleResizeWindow);
         return () => window.removeEventListener('resize', handleResizeWindow);
     }, [editorWidth, lastWidth]);
 
-    // --- Resize & Print Logik ---
+    /**
+     * print de previewed CV with the native function of React using the Browser Print function
+     * It is not optimised: It will be replaced in next versions
+     */
     const handlePrint = useReactToPrint({
         contentRef,
         documentTitle: 'Lebenslauf',
@@ -84,7 +95,6 @@ function App() {
     return (
         <div className="flex flex-col h-screen w-full bg-gray-100 overflow-hidden relative">
 
-            {/* MOBILE NAVIGATION TABS (Nur sichtbar < 900px) */}
             {isMobile && (
                 <div className="flex bg-white border-b z-[70]">
                     <button
@@ -104,7 +114,6 @@ function App() {
 
             <div className="flex flex-1 h-full overflow-hidden relative">
 
-                {/* EDITOR SEKTION */}
                 <section
                     className={`h-full bg-white border-r relative z-20 flex flex-col transition-all duration-300
                         ${isMobile ? (activeTab === 'editor' ? 'w-full' : 'hidden') : ''}`}
@@ -114,7 +123,6 @@ function App() {
                         <EditorMain cvData={cvData} setCvData={setCvData}/>
                     </div>
 
-                    {/* Resize Handle (Nur auf Desktop sichtbar) */}
                     {!isMobile && (
                         <div
                             onMouseDown={startResizing}
@@ -131,7 +139,6 @@ function App() {
                     )}
                 </section>
 
-                {/* VORSCHAU SEKTION */}
                 <section className={`flex-1 h-full overflow-y-auto bg-gray-300 p-4 md:p-8 flex flex-col items-center relative z-10 
                     ${isMobile && activeTab !== 'preview' ? 'hidden' : ''}`}>
 

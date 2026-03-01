@@ -1,16 +1,8 @@
 import React from 'react';
-import ModernTemplate from './Templates/ModernTemplate';
-import ClassicTemplate from './Templates/ClassicTemplate';
-import MinimalTemplate from './Templates/MinimalTemplate';
+import {templatesIds} from './TemplatesMap.js'
 
 export default function PreviewMain({ cvData }) {
-
-    // Mapping der IDs zu den Komponenten
-    const templates = {
-        t1: ModernTemplate,
-        t2: ClassicTemplate,
-        t3: MinimalTemplate,
-    };
+    const templates = templatesIds;
 
     const SelectedTemplate = templates[cvData.settings.templateId] || ModernTemplate;
 
